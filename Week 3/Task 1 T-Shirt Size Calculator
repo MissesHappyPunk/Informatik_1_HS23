@@ -1,0 +1,25 @@
+#!/usr/bin/env python3
+import math
+
+""" XS[80, 90] / S=(90, 98] / M=(98, 104] / L=(104, 111] / XL=(111, 124]"""
+
+# Determine the right size of a shirt. Change the function
+# below to determine the right size of a shirt.
+# Your implementation should work with any specific value.
+
+def get_size(circumference):
+    sizes = ["XS", "S", "M", "L", "XL"]
+    if circumference == 80 or math.ceil(circumference) in range(81, 91):
+        return "XS"
+    elif math.ceil(circumference) in range(91, 99):
+        return "S"
+    elif math.ceil(circumference) in range(99, 105):
+        return "M"
+    elif math.ceil(circumference) in range(105, 112):
+        return "L"
+    elif math.ceil(circumference) in range(112, 125):
+        return "XL"
+    else:
+        return "N/A"
+# The following line calls the function and prints the return
+# value to the Console. This way you can check what it does.
