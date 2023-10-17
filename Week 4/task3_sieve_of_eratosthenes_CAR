@@ -1,0 +1,35 @@
+#!/usr/bin/env python3
+# CAR
+# As mentioned in the hints, you might want to use the math package
+import math
+
+# perform the Sieve of Eratosthenes algorithm and return all primes <= n
+def sieve_of_eratosthenes(n):
+    # You need to change the functionality of this function to
+    # create a (sorted) list of all primes <= n which will then be returned.
+    # Use the Sieve of Eratosthenes algorithm from the description.
+    # You may change the following initialization of the list to be returned.
+    primes_up_to_n = []
+    if n==0 or n==1:
+        return ['empty']
+    primes = [True for i in range(0,n+1)]
+    itter = 2
+    temp = 0
+
+    # set each number and its multiplicatives to False
+    while (itter * itter) < n:
+        if primes[itter]==True:
+            temp = itter * itter
+            while temp <= n:
+                primes[temp] = False
+                temp += itter
+        itter += 1
+
+    # itterate over entire list and add the prime numbers
+    for i in range(2,len(primes)):
+        if primes[i] == True:
+            primes_up_to_n.append(i)
+    
+    return primes_up_to_n
+
+print(sieve_of_eratosthenes(100))

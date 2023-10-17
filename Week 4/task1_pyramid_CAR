@@ -1,0 +1,32 @@
+#!/usr/bin/env python3
+# CAR
+# build a string 
+def build_string_pyramid(h):
+
+    # One idea is to start with an empty string and append individual lines
+    s = ""
+    
+    # build first half including longest line
+    for r in range(h):
+        for c in range(r+1):
+            if c == r:
+                s += str(c+1)
+            else:
+                s += str(c+1) + "*"
+        s += "\n"
+    # build seconnd half
+    for r in range(h-1,0,-1):
+        for c in range(r):
+            if c == r-1:
+                s += str(c+1)
+            else:
+                s += str(c+1) + "*"
+        s += "\n"
+
+    # Don't forget to return the result
+    return s
+
+# The following line calls the function and prints the return
+# value to the Console. This way you can check what it does.
+# See the console output and compare it to the image in the task description
+print(build_string_pyramid(0))
