@@ -1,1 +1,26 @@
+#!/usr/bin/env python3
+
+# This signature is required for the automated grading to work.
+# Do not rename the function or change its list of parameters!
+
+def merge(a, b):
+
+    len_a, len_b = len(a), len(b)
+    if len_a == len_b:
+        return [liste for liste in zip(a, b) if a != [] or b != []]
+    elif not a or not b:
+        return []
+
+    max_length = max(len(a), len(b))
+    return [(a[i] if i < len_a else a[-1], b[i] if i < len_b else b[-1]) for i in range(max_length)]
+
+
+# The following line calls the function and prints the return
+# value to the Console. This way you can check what it does.
+# However, we encourage you to write tests, because then you
+# can easily test many different values on every "Test & Run"!
+print(merge([0, 1, 2], [5, 6]))
+print(merge([2, 1, 0, 90, 2, 5, 11, 7, 66, 34], [5, 6]))
+print(merge([0, 1, 2], []))
+print(merge([], []))
 
