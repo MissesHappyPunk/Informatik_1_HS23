@@ -1,1 +1,76 @@
-hab immer noch Fehler drin, sorry..... :-(
+#!/usr/bin/env python3
+
+IPv4_STRING = "127.0.0.1"
+IPv4_INVALID_STRING = "300.0.0.1"
+IPv6_STRING = "2001:0db8:85a3:0000:0000:8a2e:0370:7334"
+IPv6_INVALID_STRING = "2001:0db8:85a3:0000:0000:8a2e:0370:7334:7334"
+INVALID_IP_STRING = "Error"
+
+def is_valid_IPv4_octet(octet):
+    try:
+        if 0 <= int(octet) <= 255:
+            return True
+        else:
+            return False
+    except ValueError:
+        return False
+
+def is_valid_IPv4(ip):
+    my_octet = ip.split(".")
+
+    if len(my_octet) != 4:
+        return False
+
+    for octet in my_octet:
+        if not is_valid_IPv4_octet(octet):
+            return False
+
+    return True
+
+def is_valid_IPv6_hextet(hextet):
+    try:
+        if 0 <= int(hextet,16) <= 65535:
+            return True
+        else:
+            return False
+    except ValueError:
+        return False
+
+
+
+
+
+def is_valid_IPv6(ip):
+    my_hextet = ip.split(":")
+
+    if len(my_hextet) != 8:
+        return False
+
+    for hextet in my_hextet:
+        if not is_valid_IPv6_hextet(hextet):
+            return False
+
+    return True
+
+def is_valid_IP(ip):
+    if is_valid_IPv6(ip) or is_valid_IPv4(ip):
+        return True
+
+    return False
+
+# You should look at task/test.py and extend the test suite we provided!
+
+print(f"IP String {IPv4_STRING} is a valid IP Address:", is_valid_IP(IPv4_STRING))
+print(
+    f"IP String {IPv4_INVALID_STRING} is a valid IP Address:",
+    is_valid_IP(IPv4_INVALID_STRING),
+)
+print(f"IP String {IPv6_STRING} is a valid IP Address:", is_valid_IP(IPv6_STRING))
+print(
+    f"IP String {IPv6_INVALID_STRING} is a valid IP Address:",
+    is_valid_IP(IPv6_INVALID_STRING),
+)
+print(
+    f"IP String {INVALID_IP_STRING} is a valid IP Address:",
+    is_valid_IP(INVALID_IP_STRING),
+)
