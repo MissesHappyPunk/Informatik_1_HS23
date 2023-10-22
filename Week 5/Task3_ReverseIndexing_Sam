@@ -1,0 +1,23 @@
+from collections import defaultdict
+
+# Dataset contains data that will be reverse indexed
+dataset = [
+    "Hello world",
+    "This is the WORLD",
+    "hello again"
+ ] 
+
+def reverse_index(dataset):
+
+    index_dictionary = {}
+    extra_list = [e.lower().split() for e in dataset]
+    for index, e in enumerate(extra_list):
+        for f in e:
+            if f not in index_dictionary:
+                index_dictionary[f] = []
+            index_dictionary[f].append(index)
+
+    return index_dictionary
+    
+# You can see the output of your function here
+print(reverse_index(dataset))
