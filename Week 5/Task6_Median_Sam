@@ -1,0 +1,76 @@
+""" The actual script for script.py """
+---------------------------------------
+
+#!/usr/bin/env python3
+# This is the previous implementation, which contains several mistakes.
+# Instead of fixing the implementation, provide tests that isolate and
+# illustrate the issues.
+#
+# This signature is required for the automated grading to work.
+# You must not rename the function or change its list of parameters.
+def median(numbers):
+
+    if not numbers:
+        return None
+    # sort list
+    numbers = sorted(numbers)
+    # select element "in the middle"
+    middle_idx = len(numbers) // 2
+    # case distinction
+    if len(numbers) % 2:
+        return numbers[middle_idx]
+    else:
+        l = numbers[middle_idx-1]
+        r = numbers[middle_idx]
+        return (l+r)/2
+
+print(median([5.90]))
+print(median([3, 4]))
+print(median([]))
+
+
+
+
+
+
+""" The Tests for tests.py """
+------------------------------
+
+#!/usr/bin/env python3
+from unittest import TestCase
+from task.script import median
+
+# Extend the test suite with regression tests that cover the
+# meaningful bug reports. Make sure that you define test methods
+# and that each method _directly_ includes an assertion in the
+# body, or -otherwise- the grading will mark the test suite as
+# invalid.
+
+class MedianTests(TestCase):
+
+    def test_median_works_for_single_elements(self):
+        self.assertEqual(13, median([13]))
+
+    def test_median_works_for_sorted_numbers(self):
+        self.assertEqual(2, median([1, 2, 6]))
+
+    def test_median_works_for_unsorted_numbers(self):
+        self.assertEqual(2, median([6, 1, 2]))
+
+    def test_median_works_for_odd_lists(self):
+        self.assertEqual(2, median([6, 1, 2]))
+
+    def test_median_works_for_even_lists(self):
+        self.assertEqual(3, median([5, 1, 2, 4]))
+
+    def test_median_works_for_one_float(self):
+        self.assertAlmostEqual(5.90, median([5.90]))
+
+    def test_median_works_for_floats(self):
+        self.assertEqual(3.4, median([3.4, 1.2, 5.6]))
+
+    def test_median_works_for_empty_lists(self):
+        self.assertEqual(None, median([]))
+
+    def test_median_works_for_two_elements(self):
+        self.assertAlmostEqual(3.5, median([3, 4]))
