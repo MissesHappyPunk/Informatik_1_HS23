@@ -1,1 +1,40 @@
-Immer noch in Arbeit.....
+#!/usr/bin/env python3
+
+# This signature is required for the automated grading to work. 
+# Do not rename the function or change its list of parameters.
+def analyze(posts):
+    all_hashtags = []
+    hash_dict = {}
+
+    for line in posts:
+        hashtag = ""
+        pos_hashtags = line.split("#")
+        pos_hashtags.pop(0)
+
+        for word in pos_hashtags:
+            for i in range(len(word)):
+                if i + 1 == len(word) and word[i].isalnum():
+                    hashtag = word
+                if not word[i].isalnum():
+                    hashtag = word[:i]
+                    break
+            if hashtag:
+                if hashtag[0].isalpha():
+                    all_hashtags.append(hashtag)
+
+    for hashtag in all_hashtags:
+        hash_dict[hashtag] = all_hashtags.count(hashtag)
+
+    return hash_dict
+
+
+# The following line calls the function and prints the return
+# value to the Console. This way you can check what it does.
+# However, we encourage you to write tests, because then you
+# can easily test many different values on every "Test & Run"!
+posts = [
+    "hi #weekend",
+    "#zurich #limmat",
+    "spend my #weekend in #zurich",
+    "#zurich <3", "#", "#1", "#a#a", "##aa", "-#h4-", ".#c.", "#e1", "    #f2   "]
+print(analyze(posts))
