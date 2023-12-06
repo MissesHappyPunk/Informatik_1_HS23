@@ -1,0 +1,59 @@
+#!/usr/bin/env python3
+
+class Matrix:
+        # Remember that instanes variables should be private (i.e., prepended with two underscores: __)
+    def __init__(self, matrix_data):
+        # Check if the input matrix_data satisfies the specified conditions
+        
+        assert isinstance(matrix_data, list), "Input must be a list"
+        assert all(isinstance(row, list) and len(row) > 0 for row in matrix_data), "Invalid matrix format"
+        assert all(isinstance(value, (int, float)) for row in matrix_data for value in row), "Matrix must contain only integers or floats"
+        assert all(len(row) == len(matrix_data[0]) for row in matrix_data), "All rows must have the same length"
+        assert len(matrix_data) > 0, "At least one non-empty row is required"
+
+
+
+
+        # Set the matrix as a private instance variable
+        self._matrix = matrix_data
+
+    def __add__(self, other):
+        # Check if the matrices have the same dimensions
+        assert len(self._matrix) == len(other._matrix) and len(self._matrix[0]) == len(other._matrix[0]), "Matrices must have the same dimensions for addition"
+
+        # Perform element-wise addition
+        result_matrix = [[a + b for a, b in zip(row_self, row_other)] for row_self, row_other in zip(self._matrix, other._matrix)]
+
+        # Create a new Matrix instance with the result
+        return Matrix(result_matrix)
+
+    def __mul__(self, other):
+        # Check if the matrices can be multiplied
+        assert len(self._matrix[0]) == len(other._matrix), "Invalid matrix dimensions for multiplication"
+
+        # Perform matrix multiplication
+        result_matrix = [[sum(a * b for a, b in zip(row_self, col_other)) for col_other in zip(*other._matrix)] for row_self in self._matrix]
+
+        # Create a new Matrix instance with the result
+        return Matrix(result_matrix)
+
+    def __eq__(self, other):
+        # Check if the matrices have the same dimensions
+        if len(self._matrix) != len(other._matrix) or len(self._matrix[0]) != len(other._matrix[0]):
+            return False
+
+        # Check if all corresponding elements are equal
+        return all(a == b for row_self, row_other in zip(self._matrix, other._matrix) for a, b in zip(row_self, row_other))
+
+    def __hash__(self):
+        # Hash the matrix by hashing its string representation
+        return hash(str(self._matrix))
+
+    # Also, implement the special methods __eq__, __hash__, __add__, and __mul__
+    # as per the task description.
+
+    # def __eq__(self, other):
+    #   etc ...
+
+# Make sure to work on task/tests.py as well to test your implementation!
+
