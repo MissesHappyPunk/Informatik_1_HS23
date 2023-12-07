@@ -1,0 +1,49 @@
+#!/usr/bin/env python3
+from unittest import TestCase
+from task.script import sort
+
+# Implement this test suite. Make sure that you define test
+# methods and that each method _directly_ includes an assertion
+# in the body, or -otherwise- the grading will mark the test
+# suite as invalid.
+class SortTests(TestCase):
+    
+    def test_sort_basic(self):
+        input_list = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]
+        sorted_list = sort(input_list)
+        self.assertEqual(sorted_list, sorted(input_list))
+        self.assertIsNot(sorted_list, input_list)  # Check if a new list is returned
+
+    def test_sort_empty_list(self):
+        input_list = []
+        sorted_list = sort(input_list)
+        self.assertEqual(sorted_list, [])
+        self.assertIsNot(sorted_list, input_list)  # Check if a new list is returned
+
+    def test_sort_already_sorted(self):
+        input_list = [1, 2, 3, 4, 5]
+        expected_result = [1, 2, 3, 4, 5]
+        self.assertEqual(sort(input_list), expected_result)
+
+    def test_sort_reverse_order(self):
+        input_list = [5, 4, 3, 2, 1]
+        expected_result = sorted(input_list)
+        self.assertEqual(sort(input_list), expected_result)
+
+    def test_sort_strings(self):
+        input_list = ["apple", "orange", "banana", "grape", "kiwi"]
+        expected_result = sorted(input_list)
+        self.assertEqual(sort(input_list), expected_result)
+
+    def test_sort_mixed_types(self):
+        input_list = [3, "apple", 2.5, "banana", 1, "orange"]
+        with self.assertRaises(TypeError):
+            sort(input_list)
+
+    def test_sort_none_input(self):
+        input_list = None
+        self.assertIsNone(sort(input_list))
+
+    def test_sort_non_iterable_input(self):
+        input_data = 123  # Non-iterable input
+        self.assertIsNone(sort(input_data))
