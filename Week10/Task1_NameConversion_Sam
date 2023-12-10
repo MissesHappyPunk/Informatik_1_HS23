@@ -1,0 +1,93 @@
+script.py
+---------
+
+
+
+import os
+
+
+def process_data(path_reading, path_writing):
+    if not os.path.exists(path_reading):
+        return False
+
+    file_read = open(path_reading, "r")
+    file_write = open(path_writing, "w")
+    all_lines = file_read.readlines()
+
+    for i in range(len(all_lines)):
+        print(all_lines[i])
+        if i == 0:
+            file_write.write("Firstname,Lastname" + ('\n' if len(all_lines) > 1 else ''))
+
+        elif all_lines[i] == "\n":
+            file_write.write(",\n")
+
+        elif ";" in all_lines[i]:
+            if i < len(all_lines) - 1:
+                file_write.write(all_lines[i][all_lines[i].find(";") + 2:-1] + "," + all_lines[i][:all_lines[i].find(";")] + "\n")
+            else:
+                file_write.write(all_lines[i][all_lines[i].find(";") + 2:] + "," + all_lines[i][:all_lines[i].find(";")])
+        else:
+            file_write.write(all_lines[i][:all_lines[i].find(" ")] + "," + all_lines[i][all_lines[i].find(" ") + 1:])
+
+    file_write.close()
+    file_read.close()
+
+
+INPUT_PATH = "my_data.txt"
+OUTPUT_PATH = "my_data_processed.txt"
+process_data(INPUT_PATH, OUTPUT_PATH)
+if os.path.exists(OUTPUT_PATH):
+    with open(OUTPUT_PATH) as resultfile:
+        print(resultfile.read())
+else:
+    print("No output file exists")
+
+
+
+
+
+
+
+
+
+
+
+
+test.py
+-------
+
+
+
+#!/usr/bin/env python3
+
+from unittest import TestCase
+from script import process_data
+import os
+
+INPUT_FILE = "task/my_data.txt"
+OUTPUT_FILE = "task/my_data_processed.txt"
+
+class PublicTestSuite(TestCase):
+
+    # This function is called before each test to remove any existing output file
+    def setUp(self):
+        if os.path.exists(OUTPUT_FILE):
+            os.remove(OUTPUT_FILE)
+
+    def test_example_file(self):
+        process_data(INPUT_FILE, OUTPUT_FILE)
+        expected = "Firstname,Lastname\nBeat,Meier\n,\nBarbara,Suter\nRoland,Berger"
+        if os.path.exists(OUTPUT_FILE):
+            with open(OUTPUT_FILE, "r") as f:
+                actual = f.read()
+            self.assertEqual(expected, actual)
+        else:
+            self.fail("No output file exists")
+
+    def test_non_existing_file(self):
+        actual = process_data("task/non_existing_file.txt", OUTPUT_FILE)
+        expected = False
+        self.assertEqual(expected, actual)
+
+
